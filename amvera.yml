@@ -3,11 +3,11 @@ meta:
   toolchain:
     name: docker
 build:
-  dockerfile: Dockerfile.amvera
+  dockerfile: Dockerfile
   skip: false
 run:
   image: null
   command: null
   args: null
-  persistenceMount: /var/openproject
   containerPort: "8080"
+  
