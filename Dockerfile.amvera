@@ -65,7 +65,7 @@ COPY modules ./modules
 COPY vendor ./vendor
 COPY lib ./lib
 
-RUN bundle install --jobs=$BUNDLE_JOBS --retry=$BUNDLE_RETRY --without development test
+RUN bundle install --jobs=$BUNDLE_JOBS --retry=$BUNDLE_RETRY
 
 # Предварительная компиляция ассетов
 RUN bundle exec rake assets:precompile
