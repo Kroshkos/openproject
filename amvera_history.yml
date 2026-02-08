@@ -4,11 +4,11 @@ meta:
     name: docker
 build:
   dockerfile: Dockerfile
-  target: all-in-one
   skip: false
 run:
   image: null
   command: null
   args: null
-  persistenceMount: /var/openproject/pgdata
+  persistenceMount: /var/lib/openproject
   containerPort: "8080"
+  
