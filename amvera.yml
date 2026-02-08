@@ -9,6 +9,6 @@ run:
   image: null
   command: null
   args: null
-  persistenceMount: /data
+  persistenceMount: /var/lib/postgresql/data 
   containerPort: "8080"
   
