@@ -3,8 +3,7 @@ meta:
   toolchain:
     name: docker
 build:
-  dockerfile: Dockerfile
-  target: all-in-one
+  dockerfile: Dockerfile?target=all-in-one
   skip: false
 run:
   image: null
