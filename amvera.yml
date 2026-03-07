@@ -9,7 +9,7 @@ run:
   image: null
   command: null
   args: null
-  persistenceMount: /var/lib/openproject
+  persistenceMount: /var/openproject
   containerPort: "8080"
   
   
