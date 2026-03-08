@@ -102,17 +102,13 @@ ENTRYPOINT ["./docker/prod/entrypoint-slim.sh"]
 VOLUME ["$APP_DATA_PATH"]
 ENV OPENPROJECT_EDITION=bim
 # -------------------------------------
-# all-in-one (fixed for Amvera)
+# all-in-one (public)
 # -------------------------------------
 FROM base AS all-in-one
 
 ENV OPENPROJECT_RAILS__CACHE__STORE=memcache
+ENV DATABASE_URL=postgres://openproject:openproject@127.0.0.1/openproject
 ENV PGDATA=/var/openproject/pgdata
-
-# Create persistent directories
-RUN mkdir -p /var/openproject/pgdata \
- && mkdir -p /var/openproject/assets \
- && chown -R postgres:postgres /var/openproject || true
 
 COPY --from=openproject/gosu /go/bin/gosu /usr/local/bin/gosu
 RUN chmod +x /usr/local/bin/gosu && gosu nobody true
@@ -122,13 +118,15 @@ COPY --from=openproject/hocuspocus:release-38128805 --chown=$APP_USER:$APP_USER 
 RUN ./docker/prod/setup/postinstall-onprem.sh && \
   ln -s /app/docker/prod/setup/.irbrc /root/
 
-# Expose ports for apache
+# Expose ports for apache and postgres
 EXPOSE 80
 
-# IMPORTANT: no VOLUME here (Amvera handles persistence)
+RUN mkdir -p /var/openproject/pgdata \
+ && mkdir -p /var/openproject/assets \
+ && chown -R postgres:postgres /var/openproject
 
-# Entrypoint
+# Set a custom entrypoint to allow for privilege dropping and one-off commands
 ENTRYPOINT ["./docker/prod/entrypoint.sh"]
 
-# Start services
+# Set default command to launch the all-in-one configuration supervised by supervisord
 CMD ["./docker/prod/supervisord"]
