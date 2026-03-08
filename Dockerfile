@@ -105,10 +105,8 @@ ENV OPENPROJECT_EDITION=bim
 # all-in-one (fixed for Amvera)
 # -------------------------------------
 FROM base AS all-in-one
-
 ENV OPENPROJECT_RAILS__CACHE__STORE=memcache
-ENV DATABASE_URL=postgres://openproject:openproject@127.0.0.1/openproject
-ENV PGDATA=/var/openproject/pgdata
+
 
 # Create persistent directories
 RUN mkdir -p /var/openproject/pgdata \
