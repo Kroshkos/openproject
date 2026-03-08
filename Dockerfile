@@ -121,8 +121,9 @@ RUN ./docker/prod/setup/postinstall-onprem.sh && \
 # Expose ports for apache and postgres
 EXPOSE 80
 
-# Expose the postgres data directory and OpenProject data directory as volumes
-VOLUME ["$PGDATA", "$APP_DATA_PATH"]
+RUN mkdir -p /var/openproject/pgdata \
+ && mkdir -p /var/openproject/assets \
+ && chown -R postgres:postgres /var/openproject
 
 # Set a custom entrypoint to allow for privilege dropping and one-off commands
 ENTRYPOINT ["./docker/prod/entrypoint.sh"]
